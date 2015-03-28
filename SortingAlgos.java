@@ -9,7 +9,8 @@ public class SortingAlgos{
 		}
 		//quickSort(list,0,n-1);
 		//selectionSort(list);
-		mergesort(list,0,n-1);
+		//mergesort(list,0,n-1);
+		countingSort(list);
 		for (int i=0;i<n;i++){
 			System.out.print(list[i]+" ");
 		}
@@ -121,6 +122,35 @@ public class SortingAlgos{
 		}
 		for (int l=0;l<n;l++){
 			list[p1+l] = tlist[l];
+		}
+	}
+
+	public static void countingSort(int[] list){
+		int n = list.length;
+		int largest = list[0];
+		int smallest = list[0];
+		for (int i=1;i<n;i++){
+			if (largest<list[i]){
+				largest = list[i];
+			}
+			else if (smallest>list[i])
+				smallest = list[i];
+		}
+		int k = largest-smallest+1;
+		int[] alist = new int[k];
+		for (int i=0;i<n;i++){
+			alist[list[i]-smallest]++;
+		}
+		for (int i=1;i<k;i++){
+			alist[i] = alist[i]+alist[i-1];
+		}
+		int[] blist = new int[n];
+		for (int i=n-1;i>=0;i--){
+			blist[alist[list[i]-smallest]-1] = list[i];
+			alist[list[i]-smallest]--;
+		}
+		for (int i=0;i<n;i++){
+			list[i] = blist[i];
 		}
 	}
 }
